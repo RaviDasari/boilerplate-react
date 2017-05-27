@@ -1,8 +1,9 @@
 import Lab from 'lab';
 import { expect } from 'code';
 
-import { increment, decrement } from '../../../../client/store/actions/counter';
-import reducer from '../../../../client/store/reducers/counter';
+import reducer, {
+  increment, decrement,
+} from '../../../../client/store/modules/counter';
 
 const lab = Lab.script();
 const { experiment, test } = lab;

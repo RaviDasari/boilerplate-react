@@ -1,8 +1,9 @@
 import Lab from 'lab';
 import { expect } from 'code';
 
-import { addTodo, toggleCompleteTodo, updateTodo, hideTodo, deleteTodo } from '../../../../client/store/actions/todos';
-import reducer from '../../../../client/store/reducers/todos';
+import reducer, {
+  addTodo, toggleCompleteTodo, updateTodo, hideTodo, deleteTodo,
+} from '../../../../client/store/modules/todos';
 
 const lab = Lab.script();
 const { experiment, test } = lab;

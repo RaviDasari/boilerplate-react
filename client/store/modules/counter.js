@@ -1,6 +1,22 @@
 import R from 'ramda';
-import { INCREMENT, DECREMENT } from '../actions/counter';
 
+const INCREMENT = 'INCREMENT';
+const DECREMENT = 'DECREMENT';
+
+// Actions
+export function increment() {
+  return {
+    type: INCREMENT,
+  };
+}
+
+export function decrement() {
+  return {
+    type: DECREMENT,
+  };
+}
+
+// Reducers
 export default function counter(state = 0, action) {
   switch (action.type) {
     case INCREMENT:
