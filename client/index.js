@@ -14,10 +14,10 @@ import configureStore from './store/configureStore';
 
 injectTapEventPlugin();
 
-const store = configureStore();
+const { store, persistor } = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
 render(
-  <Root store={store} history={history} />,
+  <Root store={store} history={history} persistor={persistor} />,
   document.getElementById('app'),
 );

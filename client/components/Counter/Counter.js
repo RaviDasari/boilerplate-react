@@ -6,7 +6,7 @@ export default function Counter({ counter, increment, decrement }) {
   return (
     <div className="section counter-section app-flex">
       <h1 className="title is-1 has-text-centered">Counter:</h1>
-      <div className="counter">{counter}</div>
+      <div className="counter">{counter.value}</div>
       <div className="columns">
         <div className="column is-6 text-center">
           <Button
@@ -26,7 +26,9 @@ export default function Counter({ counter, increment, decrement }) {
 }
 
 Counter.propTypes = {
-  counter: PropTypes.number.isRequired,
+  counter: PropTypes.shape({
+    value: PropTypes.number.isRequired,
+  }).isRequired,
   increment: PropTypes.func.isRequired,
   decrement: PropTypes.func.isRequired,
 };

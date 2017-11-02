@@ -1,7 +1,10 @@
 import update from 'immutability-helper';
 import * as R from 'ramda';
 
-import { ADD_TODO, TOGGLE_COMPLETE_TODO, UPDATE_TODO, HIDE_TODO, DELETE_TODO } from '../actions/todos';
+import {
+  ADD_TODO, TOGGLE_COMPLETE_TODO, UPDATE_TODO, HIDE_TODO, DELETE_TODO,
+  INCREMENT_TODO_ID,
+} from '../actions/todos';
 
 export function todo(state = { completed: false, hidden: false }, action) {
   switch (action.type) {
@@ -29,13 +32,18 @@ export function todo(state = { completed: false, hidden: false }, action) {
   }
 }
 
-export default function todos(state = [], action) {
-  const index = R.findIndex(R.propEq('id', action.id), state);
-  const updatedAtIndex = { $splice: [[index, 1, todo(state[index], action)]] };
+export default function todos(state = {
+  list: [],
+  nextTodoId: 1,
+}, action) {
+  const index = R.findIndex(R.propEq('id', action.id), state.list);
+  const updatedAtIndex = { list: { $splice: [[index, 1, todo(state.list[index], action)]] } };
 
   switch (action.type) {
     case ADD_TODO:
-      return update(state, { $push: [todo(undefined, action)] });
+      return update(state, {
+        list: { $push: [todo(undefined, action)] },
+      });
     case TOGGLE_COMPLETE_TODO:
       return update(state, updatedAtIndex);
     case UPDATE_TODO:
@@ -43,9 +51,14 @@ export default function todos(state = [], action) {
     case HIDE_TODO:
       return update(state, updatedAtIndex);
     case DELETE_TODO:
-      return update(state, { $splice: [[index, 1]] });
+      return update(state, {
+        list: { $splice: [[index, 1]] },
+      });
+    case INCREMENT_TODO_ID:
+      return update(state, {
+        nextTodoId: { $set: R.inc(state.nextTodoId) },
+      });
     default:
       return state;
   }
 }
-

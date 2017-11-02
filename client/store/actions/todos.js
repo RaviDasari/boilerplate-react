@@ -51,9 +51,9 @@ export function deleteTodo(id) {
 }
 
 export const addTodoAndIncrementId = text => (dispatch, getState) => {
-  const { nextTodoId } = getState();
+  const { todos } = getState();
   dispatch(batchActions([
-    addTodo(nextTodoId, text),
+    addTodo(todos.nextTodoId, text),
     incrementTodoId(),
   ], 'ADD_TODO_AND_INCREMENT_ID'));
 };

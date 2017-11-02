@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import routes from '../../routes';
 
 export default function Root(props) {
-  const { store, history, scrollToTop } = props;
+  const { store, history, persistor, scrollToTop } = props;
   return (
-    <Provider store={store}>
-      <Router onUpdate={scrollToTop} history={history} routes={routes} />
-    </Provider>
+    <PersistGate persistor={persistor}>
+      <Provider store={store}>
+        <Router onUpdate={scrollToTop} history={history} routes={routes} />
+      </Provider>
+    </PersistGate>
   );
 }
 

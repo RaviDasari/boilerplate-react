@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import { persistStore } from 'redux-persist';
+
 import { enableBatching } from 'redux-batched-actions';
-import { autoRehydrate } from 'redux-persist';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
@@ -12,15 +13,15 @@ if (process.env.NODE_ENV !== 'production') {
   middlewares.push(logger);
 }
 
-const middleware = compose(
-  applyMiddleware(...middlewares),
-  autoRehydrate(),
-);
+const middleware = compose(applyMiddleware(...middlewares));
 
 export default function configureStore(preloadedState) {
-  return createStore(
+  const store = createStore(
     enableBatching(rootReducer),
     preloadedState,
     middleware,
   );
+  const persistor = persistStore(store);
+
+  return { persistor, store };
 }
